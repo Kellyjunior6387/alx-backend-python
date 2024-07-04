@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Adnaced task"""
 from typing import Mapping, Any, TypeVar, Union
 T = TypeVar('T')
 
