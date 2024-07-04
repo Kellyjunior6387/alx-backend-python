@@ -1,0 +1,5 @@
+#Ignore main file
+main
+#Ignore pycache
+_pycache_
+.mypy_cache
