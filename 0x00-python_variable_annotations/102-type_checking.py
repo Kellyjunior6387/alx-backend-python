@@ -4,7 +4,7 @@ from typing import Tuple, Any, List
 
 def zoom_array(lst: Tuple, factor: int = 2) -> List:
     """
-    Python annotations
+    Python annotations for advanced task 3
     """
     zoomed_in: List[Any] = [
         item for item in lst
