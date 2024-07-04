@@ -1,4 +1,4 @@
-#!/usr/bin/env pyhton3
+#!/usr/bin/env python3
 """ takes a list mxd_lst of integers and floats and returns their sum as a float"""
 from typing import List, Union
 
