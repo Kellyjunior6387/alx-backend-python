@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python
 """Convert a string to a float"""
 
 def to_str(n: float) -> str:
