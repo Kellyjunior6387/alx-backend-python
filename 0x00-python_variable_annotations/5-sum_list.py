@@ -4,6 +4,9 @@ from typing import List
 
 
 def sum_list(input_list: List[float]) -> float:
+    """
+    Python annotations
+    """
     sum: int = 0
     for x in input_list:
         sum += x

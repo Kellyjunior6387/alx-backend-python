@@ -3,6 +3,9 @@ from typing import Tuple, Any, List
 
 
 def zoom_array(lst: Tuple, factor: int = 2) -> List:
+    """
+    Python annotations
+    """
     zoomed_in: List[Any] = [
         item for item in lst
         for i in range(factor)

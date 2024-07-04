@@ -4,4 +4,8 @@ import math
 
 
 def floor(n: float) -> int:
+    """
+    Function to round off a number
+    """
+
     return math.floor(n)
