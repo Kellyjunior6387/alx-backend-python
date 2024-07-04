@@ -4,7 +4,7 @@ a float by multiplier"""
 from typing import Callable
 
 
-def make_mulitpler(multiplier: float) -> Callable[[float], float]:
+def make_multiplier(multiplier: float) -> Callable[[float], float]:
     """
     Python annotations
     """
