@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Advanced task"""
 from typing import Tuple, Any, List
 
 
