@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Function that is similar to wait_n but uses regular"""
 from typing import List
 import asyncio
 task_wait_random = __import__('3-tasks').task_wait_random
