@@ -47,11 +47,14 @@ class TestGetJson(unittest.TestCase):
 
 
 class TestClass:
+    """test class"""
     def a_method(self):
+        """a method to return 42"""
         return 42
 
     @memoize
     def a_property(self):
+        """A method to call a_method"""
         return self.a_method()
 
 
