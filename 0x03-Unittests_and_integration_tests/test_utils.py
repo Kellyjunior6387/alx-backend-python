@@ -59,6 +59,7 @@ class TestMemoize(unittest.TestCase):
     """class to test the memoise function"""
     @patch.object(TestClass, 'a_method', return_value=42)
     def test_memoize(self, mock_a_method):
+        """Function to test the memoisation wrapper"""
         test_instance = TestClass()
         first_call = test_instance.a_property
         second_call = test_instance.a_property
