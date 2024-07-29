@@ -14,7 +14,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ('abc',)
     ])
     @patch('client.get_json')
-    def test_org(self, org_name, mock_get_json):
+    def test_org(self, org_name, mock_get_json) -> None:
         """Function to tests the org method"""
         expected = {'repo': org_name}
         mock_get_json.return_value = expected
@@ -23,7 +23,7 @@ class TestGithubOrgClient(unittest.TestCase):
         mock_get_json.assert_called_once_with(f'https://api.github.com/orgs/{org_name}')
 
     @patch('client.GithubOrgClient.org', new_callable=PropertyMock)
-    def test_public_repos_url(self, mock_org):
+    def test_public_repos_url(self, mock_org) -> None:
         expected = 'https://api.github.com/orgs/test-org/repos'
         mock_org.return_value = {'repos_url': expected}
         client = GithubOrgClient('test-org')
@@ -32,7 +32,7 @@ class TestGithubOrgClient(unittest.TestCase):
     @patch('client.get_json')
     @patch('client.GithubOrgClient._public_repos_url',
            new_callable=PropertyMock)
-    def test_public_repos(self, mock_public_repos_url, mock_get_json):
+    def test_public_repos(self, mock_public_repos_url, mock_get_json) -> None:
         """Test the public_repos method"""
         expected_repos_url = 'https://api.github.com/orgs/test-org/repos'
         mock_public_repos_url.return_value = expected_repos_url
@@ -53,7 +53,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ({"license": {"key": "my_license"}}, "my_license", True),
         ({"license": {"key": "other_license"}}, "my_license", False)
     ])
-    def test_has_license(self, repo, license_key, expected):
+    def test_has_license(self, repo, license_key, expected) -> None:
         """Test the has_license method"""
         client = GithubOrgClient('test')
         result = client.has_license(repo, license_key)
@@ -63,9 +63,11 @@ class TestGithubOrgClient(unittest.TestCase):
 class MockResponse:
     """Mock class to simulate responses from requests.get"""
     def __init__(self, json_data):
+        """Initialises the mock response"""
         self.json_data = json_data
 
     def json(self):
+        """Return the attribute json_data"""
         return self.json_data
 
 
