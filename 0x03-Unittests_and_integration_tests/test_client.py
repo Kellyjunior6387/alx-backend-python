@@ -59,13 +59,16 @@ class TestGithubOrgClient(unittest.TestCase):
         result = client.has_license(repo, license_key)
         self.assertEqual(result, expected)
 
-class MockResponse:
-        """Mock class to simulate responses from requests.get"""
-        def __init__(self, json_data):
-            self.json_data = json_data
 
-        def json(self):
-            return self.json_data
+class MockResponse:
+    """Mock class to simulate responses from requests.get"""
+    def __init__(self, json_data):
+        self.json_data = json_data
+
+    def json(self):
+        return self.json_data
+
+
 @parameterized_class([
     {
         "org_payload": org_payload,
@@ -97,7 +100,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
             return MockResponse(repos_payload)
         else:
             raise ValueError(f"Unexpected URL: {url}")
-    
+
     def test_public_repos(self):
         """Test public_repos method integration"""
         client = GithubOrgClient('test-org')
