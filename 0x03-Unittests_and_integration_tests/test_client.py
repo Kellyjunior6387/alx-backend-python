@@ -102,13 +102,13 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """Cleans the class after testing"""
         cls.get_patcher.stop()
 
-    def test_public_repos(self):
+    def test_public_repos(self) -> None:
         """Test public_repos method integration"""
         client = GithubOrgClient('google')
         repos = client.public_repos()
         self.assertEqual(repos, self.expected_repos)
 
-    def test_public_repos_with_license(self):
+    def test_public_repos_with_license(self) -> None:
         """Test public_repos with specific license filter"""
         client = GithubOrgClient('google')
         repos = client.public_repos(license='apache-2.0')
