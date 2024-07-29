@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Module to test the Github class"""
 from client import GithubOrgClient
-from unittest.mock import patch, PropertyMock
+from unittest.mock import patch, PropertyMock, Mock
 import unittest
 from parameterized import parameterized, parameterized_class
-from fixtures import org_payload, repos_payload, expected_repos, apache2_repos
+from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -71,10 +71,10 @@ class MockResponse:
 
 @parameterized_class([
     {
-        "org_payload": org_payload,
-        "repos_payload": repos_payload,
-        "expected_repos": expected_repos,
-        "apache2_repos": apache2_repos
+        "org_payload": TEST_PAYLOAD[0][0],
+        "repos_payload": TEST_PAYLOAD[0][1],
+        "expected_repos": TEST_PAYLOAD[0][2],
+        "apache2_repos": TEST_PAYLOAD[0][3]
     }
 ])
 class TestIntegrationGithubOrgClient(unittest.TestCase):
@@ -82,33 +82,34 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         """Setups the test class"""
-        cls.get_patcher = patch('requests.get')
-        cls.mock_get = cls.get_patcher.start()
-        cls.mock_get.side_effect = cls.mock_requests_get
+        cls.payload = {
+            "https://api.github.com/orgs/google": cls.org_payload,
+            "https://api.github.com/orgs/google/repos": cls.repos_payload
+        }
+        cls.get_patcher = patch('requests.get',
+                                side_effect=cls.mock_requests_get)
+        cls.get_patcher.start()
+
+    @classmethod
+    def mock_requests_get(cls, url, *args, **kwargs):
+        """Mock requests.get to return different payloads based on the URL"""
+        if url in cls.payload:
+            return MockResponse(cls.payload[url])
+        raise ValueError(f"Unexpected URL: {url}")
 
     @classmethod
     def tearDownClass(cls) -> None:
         """Cleans the class after testing"""
         cls.get_patcher.stop()
 
-    @staticmethod
-    def mock_requests_get(url, *args, **kwargs):
-        """Mock requests.get to return different payloads based on the URL"""
-        if url == "https://api.github.com/orgs/test-org":
-            return MockResponse(org_payload)
-        elif url == "https://api.github.com/orgs/test-org/repos":
-            return MockResponse(repos_payload)
-        else:
-            raise ValueError(f"Unexpected URL: {url}")
-
     def test_public_repos(self):
         """Test public_repos method integration"""
-        client = GithubOrgClient('test-org')
+        client = GithubOrgClient('google')
         repos = client.public_repos()
         self.assertEqual(repos, self.expected_repos)
 
     def test_public_repos_with_license(self):
         """Test public_repos with specific license filter"""
-        client = GithubOrgClient('test-org')
+        client = GithubOrgClient('google')
         repos = client.public_repos(license='apache2.0')
         self.assertEqual(repos, self.apache2_repos)
